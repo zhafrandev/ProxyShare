@@ -5,6 +5,7 @@
 </head>
 <body>
     <h1>Edit JSON Data</h1>
+     <div id="notification"></div>
     <table id="data-table">
         <tr>
             <th>IP</th>
@@ -50,9 +51,20 @@
 
             if (response.ok) {
                 fetchData(); // Refresh the data
+                displayNotification("Data updated successfully.", "success");
             } else {
                 console.error("Error updating data:", response.statusText);
+                displayNotification("Error updating data. Please try again.", "error");
             }
+        }
+        function displayNotification(message, type) {
+            const notification = document.getElementById("notification");
+            notification.textContent = message;
+            notification.className = type;
+            setTimeout(() => {
+                notification.textContent = "";
+                notification.className = "";
+            }, 3000); // Clear the notification after 3 seconds
         }
 
         window.onload = function () {
