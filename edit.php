@@ -14,12 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($index !== false) {
         $data[$index]["IP"] = $editedIP;
         $data[$index]["HOST"] = $editedHost;
+
+        // Save the updated data back to the JSON file
+        file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT));
+        http_response_code(200);
+    } else {
+        http_response_code(400);
     }
-
-    // Save the updated data back to the JSON file
-    file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT));
-
-    header("Location: backend.html");
-    exit;
 }
 ?>
