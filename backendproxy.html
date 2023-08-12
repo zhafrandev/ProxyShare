@@ -8,12 +8,7 @@
             { "username": "admin", "password": "admin" }
         ];
 
-        const jsonData = [
-            { "IP": "150.22.56.48:48256", "HOST": "comcast.net" },
-            { "IP": "192.168.0.1:8080", "HOST": "example.com" },
-            { "IP": "10.0.0.2:3128", "HOST": "proxyserver.net" }
-        ];
-
+        let jsonData = [];
         let currentUser = null;
 
         function login() {
@@ -24,7 +19,7 @@
 
             if (user) {
                 currentUser = user;
-                displayData();
+                fetchData();
             } else {
                 alert("Invalid username or password.");
             }
@@ -62,6 +57,18 @@
             } else {
                 table.innerHTML = "<tr><td colspan='3'>Please login to view data.</td></tr>";
             }
+        }
+
+        function fetchData() {
+            fetch("https://raw.githubusercontent.com/zhafrandev/ProxyShare/main/DataIpHostProxy.json")
+                .then(response => response.json())
+                .then(data => {
+                    jsonData = data;
+                    displayData();
+                })
+                .catch(error => {
+                    console.error("Error fetching JSON:", error);
+                });
         }
 
         // ... (functions for editData, deleteData, and addData remain the same)
