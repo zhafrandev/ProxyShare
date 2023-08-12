@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>JSON Editor</title>
+    <style>
+        /* Tambahkan gaya CSS untuk input field */
+        input[type="text"] {
+            width: 100%;
+        }
+    </style>
     <script>
         let jsonData = [];
 
@@ -25,13 +32,32 @@
                 const row = table.insertRow();
                 const cell1 = row.insertCell(0);
                 const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
 
-                cell1.innerHTML = item.IP;
-                cell2.innerHTML = item.HOST;
+                cell1.innerHTML = `<input type="text" value="${item.IP}" id="ip-${index}">`;
+                cell2.innerHTML = `<input type="text" value="${item.HOST}" id="host-${index}">`;
+
+                const editButton = document.createElement("button");
+                editButton.textContent = "Save";
+                editButton.addEventListener("click", () => saveData(index));
+                cell3.appendChild(editButton);
             });
         }
 
-        // ... (functions for editData, deleteData, and addData remain the same)
+        function saveData(index) {
+            const newIP = document.getElementById(`ip-${index}`).value;
+            const newHost = document.getElementById(`host-${index}`).value;
+
+            if (newIP && newHost) {
+                jsonData[index].IP = newIP;
+                jsonData[index].HOST = newHost;
+                displayData(); // Refresh the table
+            } else {
+                alert("IP and Host cannot be empty.");
+            }
+        }
+
+        // ... (functions for deleteData and addData remain the same)
 
         window.onload = function () {
             fetchData();
@@ -45,8 +71,10 @@
         <tr>
             <th>IP</th>
             <th>HOST</th>
+            <th>Actions</th>
         </tr>
     </table>
     <button onclick="addData()">Add Data</button>
 </body>
+
 </html>
