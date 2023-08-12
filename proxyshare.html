@@ -78,42 +78,30 @@
                 <th>HOST</th>
             </tr>
         </table>
-        <button onclick="refreshData()">Refresh Data</button> <!-- Tambahkan tombol Refresh -->
     </div>
 
     <script>
-        const jsonUrl = "https://raw.githubusercontent.com/zhafrandev/ProxyShare/main/DataIpHostProxy.json";
+        const jsonUrl = "https://raw.githubusercontent.com/zhafrandev/ProxyShare/main/DataIpHostProxy.json"; // Ganti dengan URL raw file JSON di GitHub
 
-        function refreshData() {
-            // Hapus semua baris dari tabel sebelum memuat data baru
-            const dataTable = document.getElementById("data-table");
-            dataTable.innerHTML = `
-                <tr>
-                    <th>IP</th>
-                    <th>HOST</th>
-                </tr>
-            `;
+        // Fetch JSON data
+        fetch(jsonUrl)
+            .then(response => response.json())
+            .then(data => {
+                const dataTable = document.getElementById("data-table");
 
-            // Fetch JSON data dan muat ulang tabel
-            fetch(jsonUrl)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(item => {
-                        const newRow = dataTable.insertRow();
-                        const ipCell = newRow.insertCell(0);
-                        const hostCell = newRow.insertCell(1);
+                // Loop through JSON data and populate the table
+                data.forEach(item => {
+                    const newRow = dataTable.insertRow();
+                    const ipCell = newRow.insertCell(0);
+                    const hostCell = newRow.insertCell(1);
 
-                        ipCell.innerHTML = item.IP;
-                        hostCell.innerHTML = item.HOST;
-                    });
-                })
-                .catch(error => {
-                    console.error("Error fetching JSON:", error);
+                    ipCell.innerHTML = item.IP;
+                    hostCell.innerHTML = item.HOST;
                 });
-        }
-
-        // Memuat data pertama kali
-        refreshData();
+            })
+            .catch(error => {
+                console.error("Error fetching JSON:", error);
+            });
     </script>
 </body>
 
