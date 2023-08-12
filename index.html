@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ProxyShare Data</title>
+    <title>ProxyShare Repository</title>
 </head>
+
 <body>
-    <h1>ProxyShare Data</h1>
-    <div id="data-container"></div>
-
-    <script>
-        // URL ke file JSON di repository GitHub
-        const jsonUrl = "https://zhafrandev.github.io/ProxyShare/DataIpHostProxy.json";
-
-        // Fetch JSON data
-        fetch(jsonUrl)
-            .then(response => response.json())
-            .then(data => {
-                const dataContainer = document.getElementById("data-container");
-
-                // Loop through JSON data and create elements
-                data.forEach(item => {
-                    const p = document.createElement("p");
-                    p.textContent = `IP: ${item.IP}, HOST: ${item.HOST}`;
-                    dataContainer.appendChild(p);
-                });
-            })
-            .catch(error => {
-                console.error("Error fetching JSON:", error);
-            });
-    </script>
+    <h1>ProxyShare Repository</h1>
+    <ul>
+        <li><a href="DataIpHostProxy.json">DataIpHostProxy.json</a></li>
+        <li><a href="backendproxy.html">backendproxy.html</a></li>
+        <li><a href="proxyshare.html">proxyshare.html</a></li>
+        <li><a href="proxysharegdrive.html">proxysharegdrive.html</a></li>
+    </ul>
 </body>
 </html>
