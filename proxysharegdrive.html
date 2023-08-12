@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 20px;
+            font-size: 15px;
+        }
+
+        h1,
+        h2,
+        th,
+        td {
+            color: black;
+        }
+
+        .table-container {
+            margin-top: 20px;
+            border: 2px solid black;
+            overflow-x: auto;
+        }
+
+        .table-heading {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="table-container">
+        <div class="table-heading">INTRODUCTION</div>
+        <table>
+            <tr>
+                <td colspan="2">
+                    <p>Untuk Menggunakan IP Proxy dan Port dibawah ini, Kalian bisa menggunakan <strong><a
+                                href="https://play.google.com/store/apps/details?id=com.newtoolsworks.tun2tap"
+                                target="_blank">Tun2TAP</a></strong> dan <strong><a
+                                href="https://play.google.com/store/search?q=socksdroid&c=apps"
+                                target="_blank">SocksDroid</a></strong></p>
+                    <p>Proxy mati ? Mau request ? Gabung Grup Whatsapp Proxy Gratis disini -> <strong><a
+                                href="https://chat.whatsapp.com/DfidqXsSW1T9J22W7hjIVy/"
+                                target="_blank">Grup Whatsapp Proxy</a></strong></p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="table-container">
+        <div class="table-heading">Daftar IP Proxy Server United States</div>
+        <table id="data-table">
+            <tr>
+                <th>IP</th>
+                <th>HOST</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        const jsonUrl = "https://drive.google.com/uc?export=download&id=1b1uXTk4lI1qElfyN_3775PCz6r-Uxtfu";
+
+        // Fetch JSON data
+        fetch(jsonUrl)
+            .then(response => response.json())
+            .then(data => {
+                const dataTable = document.getElementById("data-table");
+
+                // Loop through JSON data and populate the table
+                data.forEach(item => {
+                    const newRow = dataTable.insertRow();
+                    const ipCell = newRow.insertCell(0);
+                    const hostCell = newRow.insertCell(1);
+
+                    ipCell.innerHTML = item.IP;
+                    hostCell.innerHTML = item.HOST;
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching JSON:", error);
+            });
+    </script>
+</body>
+
+</html>
