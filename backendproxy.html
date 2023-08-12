@@ -2,61 +2,9 @@
 <html>
 
 <head>
-    <title>JSON Editor with Login</title>
+    <title>JSON Editor</title>
     <script>
-        const users = [
-            { "username": "admin", "password": "admin" }
-        ];
-
         let jsonData = [];
-        let currentUser = null;
-
-        function login() {
-            const username = prompt("Enter your username:");
-            const password = prompt("Enter your password:");
-
-            const user = users.find(user => user.username === username && user.password === password);
-
-            if (user) {
-                currentUser = user;
-                fetchData();
-            } else {
-                alert("Invalid username or password.");
-            }
-        }
-
-        function logout() {
-            currentUser = null;
-            displayData();
-        }
-
-        function displayData() {
-            const table = document.getElementById("data-table");
-            table.innerHTML = "";
-
-            if (currentUser) {
-                jsonData.forEach((item, index) => {
-                    const row = table.insertRow();
-                    const cell1 = row.insertCell(0);
-                    const cell2 = row.insertCell(1);
-
-                    cell1.innerHTML = item.IP;
-                    cell2.innerHTML = item.HOST;
-
-                    const editButton = document.createElement("button");
-                    editButton.textContent = "Edit";
-                    editButton.addEventListener("click", () => editData(index));
-                    cell3.appendChild(editButton);
-
-                    const deleteButton = document.createElement("button");
-                    deleteButton.textContent = "Delete";
-                    deleteButton.addEventListener("click", () => deleteData(index));
-                    cell3.appendChild(deleteButton);
-                });
-            } else {
-                table.innerHTML = "<tr><td colspan='3'>Please login to view data.</td></tr>";
-            }
-        }
 
         function fetchData() {
             fetch("https://raw.githubusercontent.com/zhafrandev/ProxyShare/main/DataIpHostProxy.json")
@@ -70,25 +18,34 @@
                 });
         }
 
+        function displayData() {
+            const table = document.getElementById("data-table");
+            table.innerHTML = "";
+
+            jsonData.forEach((item, index) => {
+                const row = table.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+
+                cell1.innerHTML = item.IP;
+                cell2.innerHTML = item.HOST;
+            });
+        }
+
         // ... (functions for editData, deleteData, and addData remain the same)
 
         window.onload = function () {
-            displayData();
+            fetchData();
         };
     </script>
 </head>
 
 <body>
-    <h1>JSON Editor with Login</h1>
-    <div>
-        <button onclick="login()">Login</button>
-        <button onclick="logout()">Logout</button>
-    </div>
+    <h1>JSON Editor</h1>
     <table id="data-table">
         <tr>
             <th>IP</th>
             <th>HOST</th>
-            <th>Actions</th>
         </tr>
     </table>
     <button onclick="addData()">Add Data</button>
