@@ -79,29 +79,40 @@
             </tr>
         </table>
     </div>
+    <button id="refresh-button">Segarkan Data</button>
+   <script>
+        const dataTable = document.getElementById("data-table");
+        const refreshButton = document.getElementById("refresh-button");
 
-    <script>
-        const jsonUrl = "https://zhafrandev.github.io/ProxyShare/DataIpHostProxy.json?v=1"; // Ganti dengan URL raw file JSON di GitHub
+        function fetchData() {
+            const jsonUrl = `https://zhafrandev.github.io/ProxyShare/DataIpHostProxy.json?v=${Date.now()}`;
 
-        // Fetch JSON data
-        fetch(jsonUrl)
-            .then(response => response.json())
-            .then(data => {
-                const dataTable = document.getElementById("data-table");
+            // Bersihkan tabel sebelum mengisi data baru
+            dataTable.querySelector("tbody").innerHTML = "";
 
-                // Loop through JSON data and populate the table
-                data.forEach(item => {
-                    const newRow = dataTable.insertRow();
-                    const ipCell = newRow.insertCell(0);
-                    const hostCell = newRow.insertCell(1);
+            fetch(jsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Loop through JSON data and populate the table
+                    data.forEach(item => {
+                        const newRow = dataTable.querySelector("tbody").insertRow();
+                        const ipCell = newRow.insertCell(0);
+                        const hostCell = newRow.insertCell(1);
 
-                    ipCell.innerHTML = item.IP;
-                    hostCell.innerHTML = item.HOST;
+                        ipCell.textContent = item.IP;
+                        hostCell.textContent = item.HOST;
+                    });
+                })
+                .catch(error => {
+                    console.error("Error fetching JSON:", error);
                 });
-            })
-            .catch(error => {
-                console.error("Error fetching JSON:", error);
-            });
+        }
+
+        // Panggil fetchData saat halaman dimuat pertama kali
+        fetchData();
+
+        // Tambahkan event listener ke tombol "Segarkan Data"
+        refreshButton.addEventListener("click", fetchData);
     </script>
 </body>
 
